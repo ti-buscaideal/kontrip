@@ -1,0 +1,1558 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+    xmlns:wsa10="http://www.w3.org/2005/08/addressing"
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://tempuri.org/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="Aereo" targetNamespace="http://tempuri.org/">
+    <wsp:Policy wsu:Id="WSHttpBinding_IAereo_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <wsaw:UsingAddressing/>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="NetTcpBinding_IAereo_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1"/>
+                <wsaw:UsingAddressing/>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://tempuri.org/Imports">
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd4" namespace="http://tempuri.org/"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd0" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd1" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Admin.Versao"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DSG.Dominio"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.Disponibilidade"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd6" namespace="http://dnitservices.com/2011/DSG.DTO"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/DSG.DTO.Aereo"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd8" namespace="http://dnitservices.com/2011/DSG.DTO.Aereo"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.Tarifacao"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/DSG.Dominio.Aereo.TarifasDeReferencia"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.Retarifacao"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd12" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.TarifaMaxima"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd13" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.TarifasDeReferencia"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd14" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.Reserva"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd15" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.Emissao"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd16" namespace="http://dnitservices.com/2011/DSG.DTO.Hotel.v2"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd17" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.AtualizaBilhetes"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd18" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.ImportacaoReserva"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd19" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.CancelamentoReserva"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd20" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.CancelamentoBilhetes"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd21" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.RegraTarifaria"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd22" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.Assentos"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd23" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.CopiaReserva"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd24" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Fila"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd25" namespace="http://schemas.datacontract.org/2004/07/DSG.Entidades"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd26" namespace="http://dnitservices.com/2013/DSG.DTO.Veiculo"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd27" namespace="http://dnitservices.com/2013/DSG.DTO.Documento"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd28" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.AlteracaoTrechos"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd29" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.AlteracaoTrechosTarifacao"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd30" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.AlteracaoTrechosReemissao"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd31" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.ProgramaFidelidade"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd32" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.ConsultaAeroporto"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd33" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.Remarks"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd34" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.AtualizaReserva"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd35" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.ConsultaDistanciaAeroporto"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd36" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.NomePassageiro"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd37" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.Viagem"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd38" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.TarifaCheia"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd39" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.RegrasIncentivo"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd40" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.Bagagens"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd41" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.EmissaoAncillaries"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc?xsd=xsd42" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Aereo.FamiliaTarifa"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="IAereo_Versao_InputMessage">
+        <wsdl:part name="parameters" element="tns:Versao"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Versao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:VersaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_DisponibilidadeAereo_InputMessage">
+        <wsdl:part name="parameters" element="tns:DisponibilidadeAereo"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_DisponibilidadeAereo_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DisponibilidadeAereoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_InitDisponibilidadeAsync_InputMessage">
+        <wsdl:part name="parameters" element="tns:InitDisponibilidadeAsync"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_InitDisponibilidadeAsync_OutputMessage">
+        <wsdl:part name="parameters" element="tns:InitDisponibilidadeAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Async_Disponibilidade_InputMessage">
+        <wsdl:part name="parameters" element="tns:Async_Disponibilidade"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Async_Disponibilidade_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Async_DisponibilidadeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Tarifacao_InputMessage">
+        <wsdl:part name="parameters" element="tns:Tarifacao"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Tarifacao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TarifacaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TarifacaoComTrechos_InputMessage">
+        <wsdl:part name="parameters" element="tns:TarifacaoComTrechos"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TarifacaoComTrechos_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TarifacaoComTrechosResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TarifacaoComViagens_InputMessage">
+        <wsdl:part name="parameters" element="tns:TarifacaoComViagens"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TarifacaoComViagens_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TarifacaoComViagensResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Retarifacao_InputMessage">
+        <wsdl:part name="parameters" element="tns:Retarifacao"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Retarifacao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:RetarifacaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TarifaMaxima_InputMessage">
+        <wsdl:part name="parameters" element="tns:TarifaMaxima"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TarifaMaxima_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TarifaMaximaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TarifaMaximaDaReserva_InputMessage">
+        <wsdl:part name="parameters" element="tns:TarifaMaximaDaReserva"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TarifaMaximaDaReserva_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TarifaMaximaDaReservaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultaTarifasDeReferenciaDaReserva_InputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultaTarifasDeReferenciaDaReserva"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultaTarifasDeReferenciaDaReserva_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultaTarifasDeReferenciaDaReservaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultaTarifasDeReferencia_InputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultaTarifasDeReferencia"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultaTarifasDeReferencia_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultaTarifasDeReferenciaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereo_InputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereo"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereo_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComPnr_InputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComPnr"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComPnr_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComPnrResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComTrechos_InputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComTrechos"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComTrechos_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComTrechosResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComTrechosComPnr_InputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComTrechosComPnr"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComTrechosComPnr_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComTrechosComPnrResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComViagens_InputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComViagens"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComViagens_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComViagensResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComViagensComPnr_InputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComViagensComPnr"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComViagensComPnr_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComViagensComPnrResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComViagensTarifadas_InputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComViagensTarifadas"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComViagensTarifadas_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComViagensTarifadasResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComViagensTarifadasComPnr_InputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComViagensTarifadasComPnr"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarAereoComViagensTarifadasComPnr_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarAereoComViagensTarifadasComPnrResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarEEmitir_InputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarEEmitir"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ReservarEEmitir_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ReservarEEmitirResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Emitir_InputMessage">
+        <wsdl:part name="parameters" element="tns:Emitir"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Emitir_OutputMessage">
+        <wsdl:part name="parameters" element="tns:EmitirResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizaBilhetes_InputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizaBilhetes"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizaBilhetes_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizaBilhetesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ImportarReservaAereo_InputMessage">
+        <wsdl:part name="parameters" element="tns:ImportarReservaAereo"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ImportarReservaAereo_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ImportarReservaAereoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ImportarReservaAereoComPnr_InputMessage">
+        <wsdl:part name="parameters" element="tns:ImportarReservaAereoComPnr"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ImportarReservaAereoComPnr_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ImportarReservaAereoComPnrResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_CancelarReservaAereo_InputMessage">
+        <wsdl:part name="parameters" element="tns:CancelarReservaAereo"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_CancelarReservaAereo_OutputMessage">
+        <wsdl:part name="parameters" element="tns:CancelarReservaAereoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_CancelarBilhetes_InputMessage">
+        <wsdl:part name="parameters" element="tns:CancelarBilhetes"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_CancelarBilhetes_OutputMessage">
+        <wsdl:part name="parameters" element="tns:CancelarBilhetesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizarRegraTarifaria_InputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizarRegraTarifaria"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizarRegraTarifaria_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizarRegraTarifariaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultarMapaAssentos_InputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultarMapaAssentos"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultarMapaAssentos_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultarMapaAssentosResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_MarcarAssentos_InputMessage">
+        <wsdl:part name="parameters" element="tns:MarcarAssentos"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_MarcarAssentos_OutputMessage">
+        <wsdl:part name="parameters" element="tns:MarcarAssentosResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_MarcarAssentosComEmissao_InputMessage">
+        <wsdl:part name="parameters" element="tns:MarcarAssentosComEmissao"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_MarcarAssentosComEmissao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:MarcarAssentosComEmissaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_CopiarReserva_InputMessage">
+        <wsdl:part name="parameters" element="tns:CopiarReserva"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_CopiarReserva_OutputMessage">
+        <wsdl:part name="parameters" element="tns:CopiarReservaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AlterarTrechos_InputMessage">
+        <wsdl:part name="parameters" element="tns:AlterarTrechos"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AlterarTrechos_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AlterarTrechosResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AlterarTrechosTarifacao_InputMessage">
+        <wsdl:part name="parameters" element="tns:AlterarTrechosTarifacao"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AlterarTrechosTarifacao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AlterarTrechosTarifacaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AlterarTrechosReemissao_InputMessage">
+        <wsdl:part name="parameters" element="tns:AlterarTrechosReemissao"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AlterarTrechosReemissao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AlterarTrechosReemissaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultarCadastroFidelidade_InputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultarCadastroFidelidade"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultarCadastroFidelidade_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultarCadastroFidelidadeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultarAeroportos_InputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultarAeroportos"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultarAeroportos_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultarAeroportosResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AdicionarRemark_InputMessage">
+        <wsdl:part name="parameters" element="tns:AdicionarRemark"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AdicionarRemark_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AdicionarRemarkResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_MarcarVariosAssentos_InputMessage">
+        <wsdl:part name="parameters" element="tns:MarcarVariosAssentos"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_MarcarVariosAssentos_OutputMessage">
+        <wsdl:part name="parameters" element="tns:MarcarVariosAssentosResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizarReservaAereo_InputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizarReservaAereo"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizarReservaAereo_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizarReservaAereoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizarReservaAereoComImportacao_InputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizarReservaAereoComImportacao"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizarReservaAereoComImportacao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizarReservaAereoComImportacaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultaDistanciaAeroporto_InputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultaDistanciaAeroporto"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultaDistanciaAeroporto_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultaDistanciaAeroportoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizaDistanciaAeroporto_InputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizaDistanciaAeroporto"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizaDistanciaAeroporto_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizaDistanciaAeroportoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TratarNomePassageiro_InputMessage">
+        <wsdl:part name="parameters" element="tns:TratarNomePassageiro"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TratarNomePassageiro_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TratarNomePassageiroResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Viagem_InputMessage">
+        <wsdl:part name="parameters" element="tns:Viagem"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_Viagem_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ViagemResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TarifaCheia_InputMessage">
+        <wsdl:part name="parameters" element="tns:TarifaCheia"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_TarifaCheia_OutputMessage">
+        <wsdl:part name="parameters" element="tns:TarifaCheiaResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizarRegrasIncentivo_InputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizarRegrasIncentivo"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_AtualizarRegrasIncentivo_OutputMessage">
+        <wsdl:part name="parameters" element="tns:AtualizarRegrasIncentivoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultarBagagens_InputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultarBagagens"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultarBagagens_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultarBagagensResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ComprarBagagens_InputMessage">
+        <wsdl:part name="parameters" element="tns:ComprarBagagens"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ComprarBagagens_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ComprarBagagensResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ComprarBagagensComEmissao_InputMessage">
+        <wsdl:part name="parameters" element="tns:ComprarBagagensComEmissao"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ComprarBagagensComEmissao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ComprarBagagensComEmissaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_EmitirAncillaries_InputMessage">
+        <wsdl:part name="parameters" element="tns:EmitirAncillaries"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_EmitirAncillaries_OutputMessage">
+        <wsdl:part name="parameters" element="tns:EmitirAncillariesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultarFamiliaTarifa_InputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultarFamiliaTarifa"/>
+    </wsdl:message>
+    <wsdl:message name="IAereo_ConsultarFamiliaTarifa_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ConsultarFamiliaTarifaResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="IAereo">
+        <wsdl:operation name="Versao">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/Versao" message="tns:IAereo_Versao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/VersaoResponse" message="tns:IAereo_Versao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DisponibilidadeAereo">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/DisponibilidadeAereo" message="tns:IAereo_DisponibilidadeAereo_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/DisponibilidadeAereoResponse" message="tns:IAereo_DisponibilidadeAereo_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="InitDisponibilidadeAsync">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/InitDisponibilidadeAsync" message="tns:IAereo_InitDisponibilidadeAsync_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/InitDisponibilidadeAsyncResponse" message="tns:IAereo_InitDisponibilidadeAsync_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Async_Disponibilidade">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/Async_Disponibilidade" message="tns:IAereo_Async_Disponibilidade_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/Async_DisponibilidadeResponse" message="tns:IAereo_Async_Disponibilidade_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Tarifacao">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/Tarifacao" message="tns:IAereo_Tarifacao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/TarifacaoResponse" message="tns:IAereo_Tarifacao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="TarifacaoComTrechos">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/TarifacaoComTrechos" message="tns:IAereo_TarifacaoComTrechos_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/TarifacaoComTrechosResponse" message="tns:IAereo_TarifacaoComTrechos_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="TarifacaoComViagens">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/TarifacaoComViagens" message="tns:IAereo_TarifacaoComViagens_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/TarifacaoComViagensResponse" message="tns:IAereo_TarifacaoComViagens_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Retarifacao">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/Retarifacao" message="tns:IAereo_Retarifacao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/RetarifacaoResponse" message="tns:IAereo_Retarifacao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="TarifaMaxima">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/TarifaMaxima" message="tns:IAereo_TarifaMaxima_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/TarifaMaximaResponse" message="tns:IAereo_TarifaMaxima_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="TarifaMaximaDaReserva">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/TarifaMaximaDaReserva" message="tns:IAereo_TarifaMaximaDaReserva_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/TarifaMaximaDaReservaResponse" message="tns:IAereo_TarifaMaximaDaReserva_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultaTarifasDeReferenciaDaReserva">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ConsultaTarifasDeReferenciaDaReserva" message="tns:IAereo_ConsultaTarifasDeReferenciaDaReserva_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ConsultaTarifasDeReferenciaDaReservaResponse" message="tns:IAereo_ConsultaTarifasDeReferenciaDaReserva_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultaTarifasDeReferencia">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ConsultaTarifasDeReferencia" message="tns:IAereo_ConsultaTarifasDeReferencia_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ConsultaTarifasDeReferenciaResponse" message="tns:IAereo_ConsultaTarifasDeReferencia_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereo">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ReservarAereo" message="tns:IAereo_ReservarAereo_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ReservarAereoResponse" message="tns:IAereo_ReservarAereo_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComPnr">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComPnr" message="tns:IAereo_ReservarAereoComPnr_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComPnrResponse" message="tns:IAereo_ReservarAereoComPnr_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComTrechos">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComTrechos" message="tns:IAereo_ReservarAereoComTrechos_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComTrechosResponse" message="tns:IAereo_ReservarAereoComTrechos_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComTrechosComPnr">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComTrechosComPnr" message="tns:IAereo_ReservarAereoComTrechosComPnr_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComTrechosComPnrResponse" message="tns:IAereo_ReservarAereoComTrechosComPnr_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagens">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComViagens" message="tns:IAereo_ReservarAereoComViagens_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComViagensResponse" message="tns:IAereo_ReservarAereoComViagens_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagensComPnr">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComViagensComPnr" message="tns:IAereo_ReservarAereoComViagensComPnr_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComViagensComPnrResponse" message="tns:IAereo_ReservarAereoComViagensComPnr_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagensTarifadas">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComViagensTarifadas" message="tns:IAereo_ReservarAereoComViagensTarifadas_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComViagensTarifadasResponse" message="tns:IAereo_ReservarAereoComViagensTarifadas_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagensTarifadasComPnr">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComViagensTarifadasComPnr" message="tns:IAereo_ReservarAereoComViagensTarifadasComPnr_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ReservarAereoComViagensTarifadasComPnrResponse" message="tns:IAereo_ReservarAereoComViagensTarifadasComPnr_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarEEmitir">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ReservarEEmitir" message="tns:IAereo_ReservarEEmitir_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ReservarEEmitirResponse" message="tns:IAereo_ReservarEEmitir_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Emitir">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/Emitir" message="tns:IAereo_Emitir_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/EmitirResponse" message="tns:IAereo_Emitir_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizaBilhetes">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/AtualizaBilhetes" message="tns:IAereo_AtualizaBilhetes_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/AtualizaBilhetesResponse" message="tns:IAereo_AtualizaBilhetes_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ImportarReservaAereo">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ImportarReservaAereo" message="tns:IAereo_ImportarReservaAereo_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ImportarReservaAereoResponse" message="tns:IAereo_ImportarReservaAereo_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ImportarReservaAereoComPnr">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ImportarReservaAereoComPnr" message="tns:IAereo_ImportarReservaAereoComPnr_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ImportarReservaAereoComPnrResponse" message="tns:IAereo_ImportarReservaAereoComPnr_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="CancelarReservaAereo">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/CancelarReservaAereo" message="tns:IAereo_CancelarReservaAereo_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/CancelarReservaAereoResponse" message="tns:IAereo_CancelarReservaAereo_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="CancelarBilhetes">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/CancelarBilhetes" message="tns:IAereo_CancelarBilhetes_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/CancelarBilhetesResponse" message="tns:IAereo_CancelarBilhetes_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarRegraTarifaria">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/AtualizarRegraTarifaria" message="tns:IAereo_AtualizarRegraTarifaria_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/AtualizarRegraTarifariaResponse" message="tns:IAereo_AtualizarRegraTarifaria_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarMapaAssentos">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ConsultarMapaAssentos" message="tns:IAereo_ConsultarMapaAssentos_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ConsultarMapaAssentosResponse" message="tns:IAereo_ConsultarMapaAssentos_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="MarcarAssentos">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/MarcarAssentos" message="tns:IAereo_MarcarAssentos_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/MarcarAssentosResponse" message="tns:IAereo_MarcarAssentos_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="MarcarAssentosComEmissao">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/MarcarAssentosComEmissao" message="tns:IAereo_MarcarAssentosComEmissao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/MarcarAssentosComEmissaoResponse" message="tns:IAereo_MarcarAssentosComEmissao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="CopiarReserva">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/CopiarReserva" message="tns:IAereo_CopiarReserva_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/CopiarReservaResponse" message="tns:IAereo_CopiarReserva_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AlterarTrechos">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/AlterarTrechos" message="tns:IAereo_AlterarTrechos_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/AlterarTrechosResponse" message="tns:IAereo_AlterarTrechos_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AlterarTrechosTarifacao">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/AlterarTrechosTarifacao" message="tns:IAereo_AlterarTrechosTarifacao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/AlterarTrechosTarifacaoResponse" message="tns:IAereo_AlterarTrechosTarifacao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AlterarTrechosReemissao">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/AlterarTrechosReemissao" message="tns:IAereo_AlterarTrechosReemissao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/AlterarTrechosReemissaoResponse" message="tns:IAereo_AlterarTrechosReemissao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarCadastroFidelidade">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ConsultarCadastroFidelidade" message="tns:IAereo_ConsultarCadastroFidelidade_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ConsultarCadastroFidelidadeResponse" message="tns:IAereo_ConsultarCadastroFidelidade_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarAeroportos">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ConsultarAeroportos" message="tns:IAereo_ConsultarAeroportos_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ConsultarAeroportosResponse" message="tns:IAereo_ConsultarAeroportos_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AdicionarRemark">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/AdicionarRemark" message="tns:IAereo_AdicionarRemark_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/AdicionarRemarkResponse" message="tns:IAereo_AdicionarRemark_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="MarcarVariosAssentos">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/MarcarVariosAssentos" message="tns:IAereo_MarcarVariosAssentos_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/MarcarVariosAssentosResponse" message="tns:IAereo_MarcarVariosAssentos_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarReservaAereo">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/AtualizarReservaAereo" message="tns:IAereo_AtualizarReservaAereo_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/AtualizarReservaAereoResponse" message="tns:IAereo_AtualizarReservaAereo_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarReservaAereoComImportacao">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/AtualizarReservaAereoComImportacao" message="tns:IAereo_AtualizarReservaAereoComImportacao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/AtualizarReservaAereoComImportacaoResponse" message="tns:IAereo_AtualizarReservaAereoComImportacao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultaDistanciaAeroporto">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ConsultaDistanciaAeroporto" message="tns:IAereo_ConsultaDistanciaAeroporto_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ConsultaDistanciaAeroportoResponse" message="tns:IAereo_ConsultaDistanciaAeroporto_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizaDistanciaAeroporto">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/AtualizaDistanciaAeroporto" message="tns:IAereo_AtualizaDistanciaAeroporto_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/AtualizaDistanciaAeroportoResponse" message="tns:IAereo_AtualizaDistanciaAeroporto_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="TratarNomePassageiro">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/TratarNomePassageiro" message="tns:IAereo_TratarNomePassageiro_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/TratarNomePassageiroResponse" message="tns:IAereo_TratarNomePassageiro_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Viagem">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/Viagem" message="tns:IAereo_Viagem_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ViagemResponse" message="tns:IAereo_Viagem_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="TarifaCheia">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/TarifaCheia" message="tns:IAereo_TarifaCheia_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/TarifaCheiaResponse" message="tns:IAereo_TarifaCheia_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarRegrasIncentivo">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/AtualizarRegrasIncentivo" message="tns:IAereo_AtualizarRegrasIncentivo_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/AtualizarRegrasIncentivoResponse" message="tns:IAereo_AtualizarRegrasIncentivo_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarBagagens">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ConsultarBagagens" message="tns:IAereo_ConsultarBagagens_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ConsultarBagagensResponse" message="tns:IAereo_ConsultarBagagens_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ComprarBagagens">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ComprarBagagens" message="tns:IAereo_ComprarBagagens_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ComprarBagagensResponse" message="tns:IAereo_ComprarBagagens_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ComprarBagagensComEmissao">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ComprarBagagensComEmissao" message="tns:IAereo_ComprarBagagensComEmissao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ComprarBagagensComEmissaoResponse" message="tns:IAereo_ComprarBagagensComEmissao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="EmitirAncillaries">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/EmitirAncillaries" message="tns:IAereo_EmitirAncillaries_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/EmitirAncillariesResponse" message="tns:IAereo_EmitirAncillaries_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarFamiliaTarifa">
+            <wsdl:input wsaw:Action="http://tempuri.org/IAereo/ConsultarFamiliaTarifa" message="tns:IAereo_ConsultarFamiliaTarifa_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IAereo/ConsultarFamiliaTarifaResponse" message="tns:IAereo_ConsultarFamiliaTarifa_OutputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="WSHttpBinding_IAereo" type="tns:IAereo">
+        <wsp:PolicyReference URI="#WSHttpBinding_IAereo_policy"/>
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Versao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Versao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DisponibilidadeAereo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/DisponibilidadeAereo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="InitDisponibilidadeAsync">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/InitDisponibilidadeAsync" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Async_Disponibilidade">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Async_Disponibilidade" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Tarifacao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Tarifacao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TarifacaoComTrechos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TarifacaoComTrechos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TarifacaoComViagens">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TarifacaoComViagens" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Retarifacao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Retarifacao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TarifaMaxima">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TarifaMaxima" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TarifaMaximaDaReserva">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TarifaMaximaDaReserva" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultaTarifasDeReferenciaDaReserva">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultaTarifasDeReferenciaDaReserva" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultaTarifasDeReferencia">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultaTarifasDeReferencia" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComPnr">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComPnr" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComTrechos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComTrechos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComTrechosComPnr">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComTrechosComPnr" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagens">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComViagens" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagensComPnr">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComViagensComPnr" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagensTarifadas">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComViagensTarifadas" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagensTarifadasComPnr">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComViagensTarifadasComPnr" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarEEmitir">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarEEmitir" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Emitir">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Emitir" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizaBilhetes">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizaBilhetes" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ImportarReservaAereo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ImportarReservaAereo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ImportarReservaAereoComPnr">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ImportarReservaAereoComPnr" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelarReservaAereo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/CancelarReservaAereo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelarBilhetes">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/CancelarBilhetes" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarRegraTarifaria">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizarRegraTarifaria" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarMapaAssentos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultarMapaAssentos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MarcarAssentos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/MarcarAssentos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MarcarAssentosComEmissao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/MarcarAssentosComEmissao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CopiarReserva">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/CopiarReserva" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AlterarTrechos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AlterarTrechos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AlterarTrechosTarifacao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AlterarTrechosTarifacao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AlterarTrechosReemissao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AlterarTrechosReemissao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarCadastroFidelidade">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultarCadastroFidelidade" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarAeroportos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultarAeroportos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AdicionarRemark">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AdicionarRemark" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MarcarVariosAssentos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/MarcarVariosAssentos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarReservaAereo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizarReservaAereo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarReservaAereoComImportacao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizarReservaAereoComImportacao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultaDistanciaAeroporto">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultaDistanciaAeroporto" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizaDistanciaAeroporto">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizaDistanciaAeroporto" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TratarNomePassageiro">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TratarNomePassageiro" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Viagem">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Viagem" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TarifaCheia">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TarifaCheia" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarRegrasIncentivo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizarRegrasIncentivo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarBagagens">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultarBagagens" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ComprarBagagens">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ComprarBagagens" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ComprarBagagensComEmissao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ComprarBagagensComEmissao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="EmitirAncillaries">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/EmitirAncillaries" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarFamiliaTarifa">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultarFamiliaTarifa" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="NetTcpBinding_IAereo" type="tns:IAereo">
+        <wsp:PolicyReference URI="#NetTcpBinding_IAereo_policy"/>
+        <soap12:binding transport="http://schemas.microsoft.com/soap/tcp"/>
+        <wsdl:operation name="Versao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Versao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DisponibilidadeAereo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/DisponibilidadeAereo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="InitDisponibilidadeAsync">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/InitDisponibilidadeAsync" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Async_Disponibilidade">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Async_Disponibilidade" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Tarifacao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Tarifacao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TarifacaoComTrechos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TarifacaoComTrechos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TarifacaoComViagens">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TarifacaoComViagens" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Retarifacao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Retarifacao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TarifaMaxima">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TarifaMaxima" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TarifaMaximaDaReserva">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TarifaMaximaDaReserva" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultaTarifasDeReferenciaDaReserva">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultaTarifasDeReferenciaDaReserva" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultaTarifasDeReferencia">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultaTarifasDeReferencia" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComPnr">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComPnr" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComTrechos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComTrechos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComTrechosComPnr">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComTrechosComPnr" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagens">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComViagens" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagensComPnr">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComViagensComPnr" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagensTarifadas">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComViagensTarifadas" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarAereoComViagensTarifadasComPnr">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarAereoComViagensTarifadasComPnr" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ReservarEEmitir">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ReservarEEmitir" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Emitir">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Emitir" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizaBilhetes">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizaBilhetes" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ImportarReservaAereo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ImportarReservaAereo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ImportarReservaAereoComPnr">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ImportarReservaAereoComPnr" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelarReservaAereo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/CancelarReservaAereo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CancelarBilhetes">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/CancelarBilhetes" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarRegraTarifaria">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizarRegraTarifaria" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarMapaAssentos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultarMapaAssentos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MarcarAssentos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/MarcarAssentos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MarcarAssentosComEmissao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/MarcarAssentosComEmissao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CopiarReserva">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/CopiarReserva" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AlterarTrechos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AlterarTrechos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AlterarTrechosTarifacao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AlterarTrechosTarifacao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AlterarTrechosReemissao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AlterarTrechosReemissao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarCadastroFidelidade">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultarCadastroFidelidade" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarAeroportos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultarAeroportos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AdicionarRemark">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AdicionarRemark" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="MarcarVariosAssentos">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/MarcarVariosAssentos" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarReservaAereo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizarReservaAereo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarReservaAereoComImportacao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizarReservaAereoComImportacao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultaDistanciaAeroporto">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultaDistanciaAeroporto" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizaDistanciaAeroporto">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizaDistanciaAeroporto" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TratarNomePassageiro">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TratarNomePassageiro" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Viagem">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/Viagem" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TarifaCheia">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/TarifaCheia" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AtualizarRegrasIncentivo">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/AtualizarRegrasIncentivo" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarBagagens">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultarBagagens" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ComprarBagagens">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ComprarBagagens" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ComprarBagagensComEmissao">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ComprarBagagensComEmissao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="EmitirAncillaries">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/EmitirAncillaries" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConsultarFamiliaTarifa">
+            <soap12:operation soapAction="http://tempuri.org/IAereo/ConsultarFamiliaTarifa" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Aereo">
+        <wsdl:port name="WSHttpBinding_IAereo" binding="tns:WSHttpBinding_IAereo">
+            <soap12:address location="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc"/>
+            <wsa10:EndpointReference>
+                <wsa10:Address>http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Aereo.svc</wsa10:Address>
+            </wsa10:EndpointReference>
+        </wsdl:port>
+        <wsdl:port name="NetTcpBinding_IAereo" binding="tns:NetTcpBinding_IAereo">
+            <soap12:address location="net.tcp://homologa-dsg.dnitservices.local/v3.36/DSG.Servicos.Aereo.svc"/>
+            <wsa10:EndpointReference>
+                <wsa10:Address>net.tcp://homologa-dsg.dnitservices.local/v3.36/DSG.Servicos.Aereo.svc</wsa10:Address>
+            </wsa10:EndpointReference>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

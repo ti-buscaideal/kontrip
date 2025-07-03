@@ -1,0 +1,239 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+    xmlns:wsa10="http://www.w3.org/2005/08/addressing"
+    xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+    xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+    xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://tempuri.org/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="Sessao" targetNamespace="http://tempuri.org/">
+    <wsp:Policy wsu:Id="WSHttpBinding_ISessao_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <wsaw:UsingAddressing/>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="NetTcpBinding_ISessao_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1"/>
+                <wsaw:UsingAddressing/>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://tempuri.org/Imports">
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd0" namespace="http://tempuri.org/"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Admin.Versao"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/DSG.Dominio"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Sessao.Obter"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Sessao.Verificar"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Sessao.Encerrar"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Sessao.InitAsync"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd9" namespace="http://dnitservices.com/2011/DSG.DTO.Aereo"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd10" namespace="http://dnitservices.com/2011/DSG.DTO"/>
+            <xsd:import schemaLocation="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc?xsd=xsd11" namespace="http://schemas.datacontract.org/2004/07/DSG.Comandos.Sessao.InitSources"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="ISessao_Versao_InputMessage">
+        <wsdl:part name="parameters" element="tns:Versao"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_Versao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:VersaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_ObterSessao_InputMessage">
+        <wsdl:part name="parameters" element="tns:ObterSessao"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_ObterSessao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ObterSessaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_VerificarSessao_InputMessage">
+        <wsdl:part name="parameters" element="tns:VerificarSessao"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_VerificarSessao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:VerificarSessaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_EncerrarSessao_InputMessage">
+        <wsdl:part name="parameters" element="tns:EncerrarSessao"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_EncerrarSessao_OutputMessage">
+        <wsdl:part name="parameters" element="tns:EncerrarSessaoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_IniciarAsync_InputMessage">
+        <wsdl:part name="parameters" element="tns:IniciarAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_IniciarAsync_OutputMessage">
+        <wsdl:part name="parameters" element="tns:IniciarAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_IniciarSessaoSources_InputMessage">
+        <wsdl:part name="parameters" element="tns:IniciarSessaoSources"/>
+    </wsdl:message>
+    <wsdl:message name="ISessao_IniciarSessaoSources_OutputMessage">
+        <wsdl:part name="parameters" element="tns:IniciarSessaoSourcesResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ISessao">
+        <wsdl:operation name="Versao">
+            <wsdl:input wsaw:Action="http://tempuri.org/ISessao/Versao" message="tns:ISessao_Versao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/ISessao/VersaoResponse" message="tns:ISessao_Versao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ObterSessao">
+            <wsdl:input wsaw:Action="http://tempuri.org/ISessao/ObterSessao" message="tns:ISessao_ObterSessao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/ISessao/ObterSessaoResponse" message="tns:ISessao_ObterSessao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="VerificarSessao">
+            <wsdl:input wsaw:Action="http://tempuri.org/ISessao/VerificarSessao" message="tns:ISessao_VerificarSessao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/ISessao/VerificarSessaoResponse" message="tns:ISessao_VerificarSessao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="EncerrarSessao">
+            <wsdl:input wsaw:Action="http://tempuri.org/ISessao/EncerrarSessao" message="tns:ISessao_EncerrarSessao_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/ISessao/EncerrarSessaoResponse" message="tns:ISessao_EncerrarSessao_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="IniciarAsync">
+            <wsdl:input wsaw:Action="http://tempuri.org/ISessao/IniciarAsync" message="tns:ISessao_IniciarAsync_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/ISessao/IniciarAsyncResponse" message="tns:ISessao_IniciarAsync_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="IniciarSessaoSources">
+            <wsdl:input wsaw:Action="http://tempuri.org/ISessao/IniciarSessaoSources" message="tns:ISessao_IniciarSessaoSources_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/ISessao/IniciarSessaoSourcesResponse" message="tns:ISessao_IniciarSessaoSources_OutputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="WSHttpBinding_ISessao" type="tns:ISessao">
+        <wsp:PolicyReference URI="#WSHttpBinding_ISessao_policy"/>
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Versao">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/Versao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ObterSessao">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/ObterSessao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificarSessao">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/VerificarSessao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="EncerrarSessao">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/EncerrarSessao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="IniciarAsync">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/IniciarAsync" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="IniciarSessaoSources">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/IniciarSessaoSources" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="NetTcpBinding_ISessao" type="tns:ISessao">
+        <wsp:PolicyReference URI="#NetTcpBinding_ISessao_policy"/>
+        <soap12:binding transport="http://schemas.microsoft.com/soap/tcp"/>
+        <wsdl:operation name="Versao">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/Versao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ObterSessao">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/ObterSessao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="VerificarSessao">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/VerificarSessao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="EncerrarSessao">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/EncerrarSessao" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="IniciarAsync">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/IniciarAsync" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="IniciarSessaoSources">
+            <soap12:operation soapAction="http://tempuri.org/ISessao/IniciarSessaoSources" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Sessao">
+        <wsdl:port name="WSHttpBinding_ISessao" binding="tns:WSHttpBinding_ISessao">
+            <soap12:address location="http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc"/>
+            <wsa10:EndpointReference>
+                <wsa10:Address>http://homologa-dsg.govertravel.com/v3.36/DSG.Servicos.Sessao.svc</wsa10:Address>
+            </wsa10:EndpointReference>
+        </wsdl:port>
+        <wsdl:port name="NetTcpBinding_ISessao" binding="tns:NetTcpBinding_ISessao">
+            <soap12:address location="net.tcp://homologa-dsg.dnitservices.local/v3.36/DSG.Servicos.Sessao.svc"/>
+            <wsa10:EndpointReference>
+                <wsa10:Address>net.tcp://homologa-dsg.dnitservices.local/v3.36/DSG.Servicos.Sessao.svc</wsa10:Address>
+            </wsa10:EndpointReference>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
