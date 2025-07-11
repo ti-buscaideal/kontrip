@@ -1,5 +1,6 @@
 package com.example.kontrip.dto;
 
+import com.example.kontrip.aereo.ResponseDisponibilidadeAereo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,5 +14,5 @@ public class ApiResponse {
 
     private String data;
 
-    private Object dados;
+    private ResponseDisponibilidadeAereo dados;
 }

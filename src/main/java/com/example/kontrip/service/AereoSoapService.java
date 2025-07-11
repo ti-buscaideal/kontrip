@@ -1,10 +1,18 @@
 package com.example.kontrip.service;
 
 import com.example.kontrip.aereo.*;
-import com.example.kontrip.sessao.ISessao;
-import com.example.kontrip.sessao.RequestObter;
-import com.example.kontrip.sessao.ResponseObter;
-import com.example.kontrip.sessao.Sessao;
+import com.example.kontrip.aereo.ArrayOfClasse;
+import com.example.kontrip.aereo.ArrayOfTrechoPesquisaDTO;
+import com.example.kontrip.aereo.ArrayOfstring;
+import com.example.kontrip.aereo.Classe;
+import com.example.kontrip.aereo.Horario;
+import com.example.kontrip.aereo.HorarioDTO;
+import com.example.kontrip.aereo.ObjectFactory;
+import com.example.kontrip.aereo.PeriodoHoraDTO;
+import com.example.kontrip.aereo.PesquisaDTO;
+import com.example.kontrip.aereo.TrechoPesquisaDTO;
+import com.example.kontrip.dto.SessaoResponse;
+import com.example.kontrip.sessao.*;
 import com.example.kontrip.util.ApiException;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.ws.soap.AddressingFeature;
@@ -15,9 +23,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class AereoSoapService {
@@ -32,24 +37,27 @@ public class AereoSoapService {
     @Value("${senha}")
     private String senha;
 
-    public ArrayOfViagemDTO getDisponibilidade(String cia, String origem, String destino, Integer adultos, Integer criancas, Integer bebes, Boolean executiva, LocalDate dataIda, LocalDate dataVolta) {
-        String guidSessao = obterSessao();
-        return obterDisponibilidade(guidSessao, cia, origem, destino, adultos, criancas, bebes, executiva, dataIda, dataVolta);
+    public ResponseDisponibilidadeAereo getDisponibilidade(String origem, String destino, Integer adultos, Integer criancas, Integer bebes, Boolean executiva, LocalDate dataIda, LocalDate dataVolta) {
+        SessaoResponse sessaoResponse = obterSessao();
+        ResponseDisponibilidadeAereo responseDisponibilidadeAereo = obterDisponibilidade(sessaoResponse.getGuidSessao(), origem, destino, adultos, criancas, bebes, executiva, dataIda, dataVolta);
+        encerrarSessao(sessaoResponse.getSessao());
+
+        return responseDisponibilidadeAereo;
     }
 
-    private ArrayOfViagemDTO obterDisponibilidade(String guidSessao, String cia, String origem, String destino, Integer adultos, Integer criancas, Integer bebes, Boolean executiva, LocalDate dataIda, LocalDate dataVolta) {
+    private ResponseDisponibilidadeAereo obterDisponibilidade(String guidSessao, String origem, String destino, Integer adultos, Integer criancas, Integer bebes, Boolean executiva, LocalDate dataIda, LocalDate dataVolta) {
         try {
             Aereo serviceAereo = new Aereo();
             IAereo clientAereo = serviceAereo.getWSHttpBindingIAereo(new AddressingFeature(true, true));
 
-            RequestDisponibilidadeAereo requestDisponibilidadeAereo = createRequestDisponibilidadeAereo(guidSessao, cia, origem, destino, adultos, criancas, bebes, executiva, dataIda, dataVolta);
+            RequestDisponibilidadeAereo requestDisponibilidadeAereo = createRequestDisponibilidadeAereo(guidSessao, origem, destino, adultos, criancas, bebes, executiva, dataIda, dataVolta);
             ResponseDisponibilidadeAereo responseDisponibilidadeAereo = clientAereo.disponibilidadeAereo(requestDisponibilidadeAereo);
 
             if (responseDisponibilidadeAereo.isErro()) {
                 throw new ApiException("ERRO AO OBTER DISPONIBILIDADE - " + responseDisponibilidadeAereo.getMensagem().getValue());
             }
 
-            return responseDisponibilidadeAereo.getViagens().getValue();
+            return responseDisponibilidadeAereo;
 
         } catch (ApiException e) {
             throw e;
@@ -58,7 +66,7 @@ public class AereoSoapService {
         }
     }
 
-    private String obterSessao() {
+    private SessaoResponse obterSessao() {
         try {
             Sessao serviceSessao = new Sessao();
             ISessao clientSessao = serviceSessao.getWSHttpBindingISessao(new AddressingFeature(true, true));
@@ -70,12 +78,28 @@ public class AereoSoapService {
                 throw new ApiException("ERRO AO OBTER SESSAO - " + responseObter.getMensagem().getValue());
             }
 
-            return responseObter.getGuidSessao();
+            return new SessaoResponse(clientSessao, responseObter.getGuidSessao());
 
         } catch (ApiException e) {
             throw e;
         } catch (Exception ex) {
             throw new ApiException("ERRO AO OBTER SESSAO - " + ex.getMessage(), ex);
+        }
+    }
+
+    private void encerrarSessao(ISessao clientSessao) {
+        try {
+            RequestEncerrar requestEncerrar = new RequestEncerrar();
+            ResponseEncerrar responseEncerrar = clientSessao.encerrarSessao(requestEncerrar);
+
+            if (responseEncerrar.isErro()) {
+                throw new ApiException("ERRO AO ENCERRAR SESSAO - " + responseEncerrar.getMensagem().getValue());
+            }
+
+        } catch (ApiException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new ApiException("ERRO AO ENCERRAR SESSAO - " + ex.getMessage(), ex);
         }
     }
     
@@ -90,11 +114,11 @@ public class AereoSoapService {
         return requestObter;
     }
 
-    private RequestDisponibilidadeAereo createRequestDisponibilidadeAereo(String guidSessao, String cia, String origem, String destino, Integer adultos, Integer criancas, Integer bebes, Boolean executiva, LocalDate dataIda, LocalDate dataVolta) {
+    private RequestDisponibilidadeAereo createRequestDisponibilidadeAereo(String guidSessao, String origem, String destino, Integer adultos, Integer criancas, Integer bebes, Boolean executiva, LocalDate dataIda, LocalDate dataVolta) {
         try {
             RequestDisponibilidadeAereo requestDisponibilidadeAereo = new RequestDisponibilidadeAereo();
 
-            PesquisaDTO pesquisaDTO = createPesquisaDTO(cia, origem, destino, adultos, criancas, bebes, executiva, dataIda, dataVolta);
+            PesquisaDTO pesquisaDTO = createPesquisaDTO(origem, destino, adultos, criancas, bebes, executiva, dataIda, dataVolta);
             JAXBElement<PesquisaDTO> requestDisponibilidadeAereoPesquisa = OBJECT_FACTORY_AEREO.createRequestDisponibilidadeAereoPesquisa(pesquisaDTO);
 
             requestDisponibilidadeAereo.setPesquisa(requestDisponibilidadeAereoPesquisa);
@@ -109,21 +133,21 @@ public class AereoSoapService {
         }
     }
 
-    private PesquisaDTO createPesquisaDTO(String cia, String origem, String destino, Integer adultos, Integer criancas, Integer bebes, Boolean executiva, LocalDate dataIda, LocalDate dataVolta) throws DatatypeConfigurationException {
+    private PesquisaDTO createPesquisaDTO(String origem, String destino, Integer adultos, Integer criancas, Integer bebes, Boolean executiva, LocalDate dataIda, LocalDate dataVolta) throws DatatypeConfigurationException {
         PesquisaDTO pesquisaDTO = new PesquisaDTO();
 
         ArrayOfClasse arrayOfClasses = createArrayOfClasses(executiva);
         JAXBElement<ArrayOfClasse> pesquisaDTOClasses = OBJECT_FACTORY_AEREO.createPesquisaDTOClasses(arrayOfClasses);
         pesquisaDTO.setClasses(pesquisaDTOClasses);
 
-        ArrayOfstring arrayOfCias = createArrayOfCias(cia);
+        ArrayOfstring arrayOfCias = createArrayOfCias();
         JAXBElement<ArrayOfstring> pesquisaDTOCompanhias = OBJECT_FACTORY_AEREO.createPesquisaDTOCompanhias(arrayOfCias);
         pesquisaDTO.setCompanhias(pesquisaDTOCompanhias);
 
         pesquisaDTO.setIsentarTaxaDU(false);
-        pesquisaDTO.setMultiplasOpcoesPorTrecho(false);
-        pesquisaDTO.setMultiplasTarifasPorTrecho(false);
-        pesquisaDTO.setPermitirMaisOpcoesBagagem(false);
+        pesquisaDTO.setMultiplasOpcoesPorTrecho(true);
+        pesquisaDTO.setMultiplasTarifasPorTrecho(true);
+        pesquisaDTO.setPermitirMaisOpcoesBagagem(true);
         pesquisaDTO.setQuantidadeAdultos(adultos);
         pesquisaDTO.setQuantidadeCriancas(criancas);
         pesquisaDTO.setQuantidadeBebes(bebes);
@@ -183,15 +207,15 @@ public class AereoSoapService {
         trechoPesquisaDTO.setDestino(OBJECT_FACTORY_AEREO.createTrechoPesquisaDTODestino(destino));
         trechoPesquisaDTO.setHorarioPartida(Horario.TODOS);
 
-//        PeriodoHoraDTO periodoHoraDTO = createPeriodoHoraDTO();
-//        JAXBElement<PeriodoHoraDTO> trechoPesquisaDTOHoraPartida = OBJECT_FACTORY_AEREO.createTrechoPesquisaDTOHoraPartida(periodoHoraDTO);
-//        trechoPesquisaDTO.setHoraPartida(trechoPesquisaDTOHoraPartida);
-//
-//        JAXBElement<PeriodoHoraDTO> trechoPesquisaDTOHoraChegada = OBJECT_FACTORY_AEREO.createTrechoPesquisaDTOHoraChegada(periodoHoraDTO);
-//        trechoPesquisaDTO.setHoraChegada(trechoPesquisaDTOHoraChegada);
+        PeriodoHoraDTO periodoHoraDTO = createPeriodoHoraDTO();
+        JAXBElement<PeriodoHoraDTO> trechoPesquisaDTOHoraPartida = OBJECT_FACTORY_AEREO.createTrechoPesquisaDTOHoraPartida(periodoHoraDTO);
+        trechoPesquisaDTO.setHoraPartida(trechoPesquisaDTOHoraPartida);
 
-        trechoPesquisaDTO.setRaioDistanciaMilhasOrigem(0);
-        trechoPesquisaDTO.setRaioDistanciaMilhasDestino(0);
+        JAXBElement<PeriodoHoraDTO> trechoPesquisaDTOHoraChegada = OBJECT_FACTORY_AEREO.createTrechoPesquisaDTOHoraChegada(periodoHoraDTO);
+        trechoPesquisaDTO.setHoraChegada(trechoPesquisaDTOHoraChegada);
+
+//        trechoPesquisaDTO.setRaioDistanciaMilhasOrigem(0);
+//        trechoPesquisaDTO.setRaioDistanciaMilhasDestino(0);
         return trechoPesquisaDTO;
     }
 
@@ -225,9 +249,10 @@ public class AereoSoapService {
         return horarioDTO;
     }
 
-    private ArrayOfstring createArrayOfCias(String cia) {
+    private ArrayOfstring createArrayOfCias() {
         ArrayOfstring arrayOfstring = new ArrayOfstring();
-        arrayOfstring.getString().add(cia);
+        arrayOfstring.getString().add("LA");
+        arrayOfstring.getString().add("G3");
 
         return arrayOfstring;
     }
